@@ -1,3 +1,7 @@
+//Controllino Script joka odottaa tulevaa JSON viestiä Controllinon osoitteeseen.
+//Koodi katsoo jos JSON viestin device == 1 ja command == test jonka jälkeen vastaa "success".
+
+
 #include <Ethernet.h>
 #include <ArduinoJson.h>
 #include <SPI.h>
