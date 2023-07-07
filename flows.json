@@ -1,0 +1,1387 @@
+[
+    {
+        "id": "2ca61d445c4204a7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "927bfe41630d5785",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "name": "Pumput",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "fafdad2034519856",
+            "52a9ebe79aeac051"
+        ],
+        "x": 228,
+        "y": -7,
+        "w": 1044,
+        "h": 574
+    },
+    {
+        "id": "532f82d5a9391859",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "name": "Lämpötilat",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "7cbd85c0aa7e1796",
+            "a34214aab66156f4"
+        ],
+        "x": 228,
+        "y": 633,
+        "w": 1044,
+        "h": 594
+    },
+    {
+        "id": "208865574a80fe1d",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "name": "Sekoittimet",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "2b2f6c1ca8e3b509",
+            "4ad24c3f228b283f"
+        ],
+        "x": 1368,
+        "y": 493,
+        "w": 424,
+        "h": 314
+    },
+    {
+        "id": "2b2f6c1ca8e3b509",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "208865574a80fe1d",
+        "name": "S1",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e82d26741e0256a9",
+            "c73970675a796381",
+            "85a3fc42493831ce"
+        ],
+        "x": 1394,
+        "y": 519,
+        "w": 372,
+        "h": 122
+    },
+    {
+        "id": "4ad24c3f228b283f",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "208865574a80fe1d",
+        "name": "S2",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "37ee0ca819247fed",
+            "03d7476411df4861",
+            "4e43748a72eae979"
+        ],
+        "x": 1394,
+        "y": 659,
+        "w": 372,
+        "h": 122
+    },
+    {
+        "id": "7cbd85c0aa7e1796",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "532f82d5a9391859",
+        "name": "T2",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "88871f6bb5be231c",
+            "1ba6d812e573ad75",
+            "003ebe929f0d4b55"
+        ],
+        "x": 254,
+        "y": 1059,
+        "w": 392,
+        "h": 142
+    },
+    {
+        "id": "a34214aab66156f4",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "532f82d5a9391859",
+        "name": "T1",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4b48a41d27371611",
+            "8c331bb96118e913",
+            "f2dcca77cb970ba5",
+            "6ce158651f14bd56",
+            "0a27a2484252dc89",
+            "502fa40b8a503a68",
+            "5a35557f4c377b7e",
+            "431d59c96f795f02",
+            "ac867812cdc57923",
+            "959ffbe1ea8e06aa",
+            "849b95b61b2f081a",
+            "29a246de6bbaa4f1",
+            "8f6663ac96c9c36e",
+            "4f222e65e923b355",
+            "d065c64ee5090c12",
+            "23d8f0ad97b792b9"
+        ],
+        "x": 254,
+        "y": 659,
+        "w": 992,
+        "h": 362
+    },
+    {
+        "id": "fafdad2034519856",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "927bfe41630d5785",
+        "name": "P2",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ccf9c171c0766d3e",
+            "18d0ebf5ad194ae0",
+            "a336eea9c8887f6a"
+        ],
+        "x": 254,
+        "y": 419,
+        "w": 372,
+        "h": 122
+    },
+    {
+        "id": "52a9ebe79aeac051",
+        "type": "group",
+        "z": "2ca61d445c4204a7",
+        "g": "927bfe41630d5785",
+        "name": "P1",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ad409b19775b7f9a",
+            "ea7568fb231883a8",
+            "55ae02d2ab34135d",
+            "a8cca25ac23cada1",
+            "412816a8d0554075",
+            "451a33a3e038741a",
+            "1ce4649a71baa652",
+            "87bb8e702349717d",
+            "4866a1bc5bcfd40c",
+            "ec16682ba0875703",
+            "9654b12874e55d62",
+            "c4f12fdd89aeda79",
+            "96438d86897c1e5f",
+            "6113250fa0d7b486",
+            "b49f5ff60311b867",
+            "d3ac19963809f44d",
+            "0c04b91c7c58fce5",
+            "5dc5b606cde54745"
+        ],
+        "x": 254,
+        "y": 19,
+        "w": 992,
+        "h": 362
+    },
+    {
+        "id": "55ae02d2ab34135d",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "label": "P1 state",
+        "tooltip": "",
+        "group": "670d2a99fd46733c",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "a8cca25ac23cada1"
+            ]
+        ]
+    },
+    {
+        "id": "ad409b19775b7f9a",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "label": "P1 set flow rate",
+        "tooltip": "L/min",
+        "group": "670d2a99fd46733c",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": "0",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "9654b12874e55d62"
+            ]
+        ]
+    },
+    {
+        "id": "ea7568fb231883a8",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "group": "670d2a99fd46733c",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "P1 cur. speed",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 740,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a336eea9c8887f6a",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "fafdad2034519856",
+        "name": "",
+        "label": "P2 state",
+        "tooltip": "",
+        "group": "670d2a99fd46733c",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 540,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "18d0ebf5ad194ae0",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "fafdad2034519856",
+        "name": "",
+        "label": "P2 set flow rate",
+        "tooltip": "L/min",
+        "group": "670d2a99fd46733c",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 360,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ccf9c171c0766d3e",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "fafdad2034519856",
+        "group": "670d2a99fd46733c",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "P2 cur. speed",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 360,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8c331bb96118e913",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "group": "6582034e01ee7c47",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "T1 cur. temp.",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 730,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "4b48a41d27371611",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "label": "T1 set temp target",
+        "tooltip": "C°",
+        "group": "6582034e01ee7c47",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": "0",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 390,
+        "y": 820,
+        "wires": [
+            [
+                "4f222e65e923b355"
+            ]
+        ]
+    },
+    {
+        "id": "f2dcca77cb970ba5",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "label": "T1 state",
+        "tooltip": "",
+        "group": "6582034e01ee7c47",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 360,
+        "y": 920,
+        "wires": [
+            [
+                "ac867812cdc57923"
+            ]
+        ]
+    },
+    {
+        "id": "003ebe929f0d4b55",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "7cbd85c0aa7e1796",
+        "group": "6582034e01ee7c47",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "T12 cur. temp.",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 360,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "88871f6bb5be231c",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "7cbd85c0aa7e1796",
+        "name": "",
+        "label": "T2 set temp target",
+        "tooltip": "C°",
+        "group": "6582034e01ee7c47",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 370,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ba6d812e573ad75",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "7cbd85c0aa7e1796",
+        "name": "",
+        "label": "T2 state",
+        "tooltip": "",
+        "group": "6582034e01ee7c47",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 560,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85a3fc42493831ce",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "2b2f6c1ca8e3b509",
+        "name": "",
+        "label": "S1 state",
+        "tooltip": "",
+        "group": "28b14a0fd4744274",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1680,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c73970675a796381",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "2b2f6c1ca8e3b509",
+        "name": "",
+        "label": "S1 set stir speed",
+        "tooltip": "RPM",
+        "group": "28b14a0fd4744274",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 1510,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e82d26741e0256a9",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "2b2f6c1ca8e3b509",
+        "group": "28b14a0fd4744274",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "S1 cur. speed",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1500,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "4e43748a72eae979",
+        "type": "ui_switch",
+        "z": "2ca61d445c4204a7",
+        "g": "4ad24c3f228b283f",
+        "name": "",
+        "label": "S2 state",
+        "tooltip": "",
+        "group": "28b14a0fd4744274",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1680,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03d7476411df4861",
+        "type": "ui_text_input",
+        "z": "2ca61d445c4204a7",
+        "g": "4ad24c3f228b283f",
+        "name": "",
+        "label": "S2 set stir speed",
+        "tooltip": "RPM",
+        "group": "28b14a0fd4744274",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 1510,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "37ee0ca819247fed",
+        "type": "ui_text",
+        "z": "2ca61d445c4204a7",
+        "g": "4ad24c3f228b283f",
+        "group": "28b14a0fd4744274",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "S2 cur. speed",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1500,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "a8cca25ac23cada1",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "on/off",
+        "func": "//Jos arvon on tosi muuta msg.payload viimeiseksi annetuksi arvoksi\nif (msg.payload === true) {\n    return [msg, null];\n}\n\n//jos arvo on muu (false) palauttaa false\nelse { return [null, msg] }",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "451a33a3e038741a"
+            ],
+            [
+                "b49f5ff60311b867"
+            ]
+        ]
+    },
+    {
+        "id": "412816a8d0554075",
+        "type": "change",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "P1Speed",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "451a33a3e038741a",
+        "type": "change",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "P1Speed",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "b49f5ff60311b867"
+            ]
+        ]
+    },
+    {
+        "id": "1ce4649a71baa652",
+        "type": "serial out",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "serial": "1e465c0af107f046",
+        "x": 1070,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6a58c7e2ac957697",
+        "type": "inject",
+        "z": "2ca61d445c4204a7",
+        "name": "statusCheak",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "statusCheak",
+        "payload": "{\"ID\": 1, \"laite\": \"\", \"data\": \"status\"}",
+        "payloadType": "json",
+        "x": 1370,
+        "y": 80,
+        "wires": [
+            [
+                "b1aed7af3681b242"
+            ]
+        ]
+    },
+    {
+        "id": "b1aed7af3681b242",
+        "type": "serial out",
+        "z": "2ca61d445c4204a7",
+        "name": "",
+        "serial": "1e465c0af107f046",
+        "x": 1510,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "96438d86897c1e5f",
+        "type": "serial in",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "serial": "1e465c0af107f046",
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "6113250fa0d7b486"
+            ]
+        ]
+    },
+    {
+        "id": "6113250fa0d7b486",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "parsi P1 nopeus",
+        "func": "var receivedObject = msg.payload;\n\nif (receivedObject.hasOwnProperty(\"laite\")) {\n    var laiteArvo = receivedObject.laite;\n}\n\nif (laiteArvo === \"P1\"){\n    receivedObject.hasOwnProperty(\"nopeus\")\n    var nopeusArvo = receivedObject.nopeus;\n    msg.payload = nopeusArvo + \" RPM\"\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "ea7568fb231883a8",
+                "4866a1bc5bcfd40c"
+            ]
+        ]
+    },
+    {
+        "id": "87bb8e702349717d",
+        "type": "inject",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"ID\": 0, \"laite\": \"P1\", \"nopeus\": 232}",
+        "payloadType": "json",
+        "x": 350,
+        "y": 60,
+        "wires": [
+            [
+                "6113250fa0d7b486"
+            ]
+        ]
+    },
+    {
+        "id": "4866a1bc5bcfd40c",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "P1 nykyinen",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "ec16682ba0875703",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "P1 nopeus asetus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6ce158651f14bd56",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "parsi T1 lämpötila",
+        "func": "var receivedObject = msg.payload;\n\nif (receivedObject.hasOwnProperty(\"laite\")) {\n    var laiteArvo = receivedObject.laite;\n}\n\nif (laiteArvo === \"T1\"){\n    receivedObject.hasOwnProperty(\"temp\")\n    var tempArvo = receivedObject.temp;\n    msg.payload = tempArvo + \"C°\"\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 720,
+        "wires": [
+            [
+                "0a27a2484252dc89",
+                "8c331bb96118e913"
+            ]
+        ]
+    },
+    {
+        "id": "502fa40b8a503a68",
+        "type": "serial in",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "serial": "1e465c0af107f046",
+        "x": 350,
+        "y": 740,
+        "wires": [
+            [
+                "6ce158651f14bd56"
+            ]
+        ]
+    },
+    {
+        "id": "5a35557f4c377b7e",
+        "type": "inject",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"ID\": 0, \"laite\": \"T1\", \"temp\": 232}",
+        "payloadType": "json",
+        "x": 350,
+        "y": 700,
+        "wires": [
+            [
+                "6ce158651f14bd56"
+            ]
+        ]
+    },
+    {
+        "id": "0a27a2484252dc89",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "T1 nykyinen",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "431d59c96f795f02",
+        "type": "change",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "T1Target",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac867812cdc57923",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "on/off",
+        "func": "//Jos arvon on tosi muuta msg.payload viimeiseksi annetuksi arvoksi\nif (msg.payload === true) {\n    return [msg, null];\n}\n\n//jos arvo on muu (false) palauttaa false\nelse { return [null, msg]}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 920,
+        "wires": [
+            [
+                "959ffbe1ea8e06aa"
+            ],
+            [
+                "849b95b61b2f081a"
+            ]
+        ]
+    },
+    {
+        "id": "959ffbe1ea8e06aa",
+        "type": "change",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "T1Target",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 900,
+        "wires": [
+            [
+                "849b95b61b2f081a"
+            ]
+        ]
+    },
+    {
+        "id": "849b95b61b2f081a",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "JSON rakennus",
+        "func": "//Jos kontekstiin ei ole säilötty mitään\nif (msg.payload === undefined) {\n    return [{payload: \"Ei annettua T1 arvoa\"}, null]\n}\n\n//Jos msg.payload on false palauttaa JSON viestin joka pysäyttää moottorin\nelse if (msg.payload === false) {\n    msg.payload = {\"ID\": 1, \"laite\": \"T1\", \"target\": 0}\n    return [null, msg.payload]\n}\n\n//Muutoin antaa käskyn pyörittää moottoria halutulla arvolla\nelse {\n    var nopeus = msg.payload;\n    msg.payload = { \"ID\": 1, \"laite\": \"T1\", \"target\": nopeus }\n    return [null, msg]\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 920,
+        "wires": [
+            [
+                "23d8f0ad97b792b9"
+            ],
+            [
+                "8f6663ac96c9c36e",
+                "29a246de6bbaa4f1"
+            ]
+        ]
+    },
+    {
+        "id": "29a246de6bbaa4f1",
+        "type": "serial out",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "",
+        "serial": "1e465c0af107f046",
+        "x": 1070,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "8f6663ac96c9c36e",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "P1 nopeus asetus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "4f222e65e923b355",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "name": "min/max",
+        "func": "//Aseta min ja max arvot\nvar min = 30, max = 100\n//Aseta haluttu nimi varoitukselle\nvar nodeNimi = \"T1 tavoite\"\n\n//parsiin JSON viestin\nvar value = parseFloat(msg.payload);\n//tarkistaa onko arvoa annettu tai onko se arvojen ulkopuolella jos on niin palauttaa häiriö viestin\nif (isNaN(value) || value < min || value > max) {\n    return [{ payload: (\"Arvo \" + nodeNimi + \" on liian pieni tai liian suuri\") }, null];\n} \n\n//Muutoin palauttaa viestin säilöttäväksi\nelse {\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 820,
+        "wires": [
+            [
+                "d065c64ee5090c12"
+            ],
+            [
+                "431d59c96f795f02"
+            ]
+        ]
+    },
+    {
+        "id": "d065c64ee5090c12",
+        "type": "ui_toast",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Väärä arvo",
+        "x": 750,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "9654b12874e55d62",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "min/max",
+        "func": "//Aseta min ja max arvot\nvar min = 1, max = 420\n//Aseta haluttu nimi varoitukselle\nvar nodeNimi = \"P1 virtaus\"\n\n//parsiin JSON viestin\nvar value = parseFloat(msg.payload);\n\n//tarkistaa onko arvoa annettu tai onko se arvojen ulkopuolella jos on niin palauttaa häiriö viestin\nif (isNaN(value) || value < min || value > max) {\n    return [{ payload: (\"Arvo \" + nodeNimi + \" on liian pieni tai liian suuri\") }, null];\n} \n\n//Muutoin palauttaa viestin säilöttäväksi\nelse {\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 180,
+        "wires": [
+            [
+                "c4f12fdd89aeda79"
+            ],
+            [
+                "412816a8d0554075"
+            ]
+        ]
+    },
+    {
+        "id": "c4f12fdd89aeda79",
+        "type": "ui_toast",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Väärä arvo",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "23d8f0ad97b792b9",
+        "type": "ui_toast",
+        "z": "2ca61d445c4204a7",
+        "g": "a34214aab66156f4",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Puuttuva tavoite",
+        "x": 1100,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "b49f5ff60311b867",
+        "type": "function",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "JSON rakennus",
+        "func": "//Jos kontekstiin ei ole säilötty mitään\nif (msg.payload === undefined) {\n    return [{payload: \"Ei annettua P1 arvoa\"}, null]\n}\n\n//Jos msg.payload on false palauttaa JSON viestin joka pysäyttää moottorin\nelse if (msg.payload === false) {\n    msg.payload = {\"ID\": 1, \"laite\": \"P1\", \"target\": 0}\n    return [null, msg]\n}\n\n//Muutoin antaa käskyn pyörittää moottoria halutulla arvolla\nelse {\n    var nopeus = msg.payload;\n    msg.payload = { \"ID\": 1, \"laite\": \"P1\", \"target\": nopeus }\n    return [null, msg]\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 280,
+        "wires": [
+            [
+                "d3ac19963809f44d",
+                "5dc5b606cde54745"
+            ],
+            [
+                "1ce4649a71baa652",
+                "ec16682ba0875703"
+            ]
+        ]
+    },
+    {
+        "id": "d3ac19963809f44d",
+        "type": "ui_toast",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Puuttuva tavoite",
+        "x": 1100,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0c04b91c7c58fce5",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5dc5b606cde54745",
+        "type": "debug",
+        "z": "2ca61d445c4204a7",
+        "g": "52a9ebe79aeac051",
+        "name": "P1 nopeus asetus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b4765f9842824f0c",
+        "type": "ui_spacer",
+        "z": "2ca61d445c4204a7",
+        "name": "spacer",
+        "group": "670d2a99fd46733c",
+        "order": 4,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "d06d973ffeb10d04",
+        "type": "ui_spacer",
+        "z": "2ca61d445c4204a7",
+        "name": "spacer",
+        "group": "6582034e01ee7c47",
+        "order": 4,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "588c20b09e8d3da1",
+        "type": "ui_spacer",
+        "z": "2ca61d445c4204a7",
+        "name": "spacer",
+        "group": "28b14a0fd4744274",
+        "order": 4,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "670d2a99fd46733c",
+        "type": "ui_group",
+        "name": "Pumput",
+        "tab": "c70ea3cf22739cef",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6582034e01ee7c47",
+        "type": "ui_group",
+        "name": "Lämpötila",
+        "tab": "c70ea3cf22739cef",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "28b14a0fd4744274",
+        "type": "ui_group",
+        "name": "Sekoittimet",
+        "tab": "c70ea3cf22739cef",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1e465c0af107f046",
+        "type": "serial-port",
+        "serialport": "COM5",
+        "serialbaud": "19200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "c70ea3cf22739cef",
+        "type": "ui_tab",
+        "name": "Main",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
