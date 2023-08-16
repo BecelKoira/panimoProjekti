@@ -1,0 +1,59 @@
+//ModbusRTU FC 51 micro drive start stop controllino sctipt 
+//Wehn you start the sctipt and send START on the serial intarface it will start the motor and when sending STOP it will STOP the motor
+//The code works by writing 1 or 0 to coil 6
+//link to manual https://files.danfoss.com/download/Drives/MG02C602.pdf
+
+#include <SPI.h>
+#include <Controllino.h>
+#include <ModbusMaster.h>
+
+
+// Instantiate ModbusMaster object
+ModbusMaster node(3, 1);
+
+void setup() {
+  // Initialize Controllino RS485
+  Controllino_RS485Init(115200);
+  Controllino_RS485RxEnable();
+  Controllino_RS485TxEnable();
+
+  // Initialize Modbus communication baud rate
+  Serial.begin(9600);
+
+  // Set the slave ID (FC 51 micro drive's Modbus address)
+  node.begin(115200);
+
+  // Print ready message
+  Serial.println("Type START to start the motor and STOP to stop the motor.");
+}
+
+void loop() {
+  if (Serial.available()) {
+    String command = Serial.readStringUntil('\n');
+    command.trim();  // Remove any trailing whitespace
+
+    if (command == "START") {
+      startMotor();
+    } else if (command == "STOP") {
+      stopMotor();
+    }
+  }
+}
+
+void startMotor() {
+  // Set the "Ramp stop" bit to "Start" (Coil 07)
+  node.writeSingleCoil(6, 1);  // Addressing starts from 0, so coil 07 is addressed as 6
+
+  // You can add more control commands if needed
+
+  Serial.println("Motor started");
+}
+
+void stopMotor() {
+  // Set the "Ramp stop" bit to "Ramp stop" (Coil 07)
+  node.writeSingleCoil(6, 0);  // Addressing starts from 0, so coil 07 is addressed as 6
+
+  // You can add more control commands if needed
+
+  Serial.println("Motor stopped");
+}
