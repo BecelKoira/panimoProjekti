@@ -33,7 +33,7 @@ Modbus ControllinoModbusMaster(MasterModbusAdd, RS485Serial, 0);
 // Each Modbus device has particular internal registers that are available for the Modbus master.
 // check the frequency driver datasheet for a reference on the registers. We have 65 available registers to work with.
 // All addresses are referenced to zero, so whichever register you want it's equivalent value would be address -1 in HEX format. ie. register 1 is addressed as 0x00 and register 65 is addressed as 0x40 (64 in HEX)
-uint16_t ModbusSlaveRegisters[64]
+uint16_t ModbusSlaveRegisters[64];
 // This is a structure which contains a query to a slave device
 modbus_t ModbusQuery[2];
 
@@ -54,7 +54,7 @@ void setup() {
  ModbusQuery[0].u8fct = Read_coils; // function code
  ModbusQuery[0].u16RegAdd = 0x29; // start address in slave
  ModbusQuery[0].u16CoilsNo = 1; // number of elements (coils or registers) to read
- ModbusQuery[0].au16reg = ModbusSlaveRegisters+49; // pointer to a memory array in the CONTROLLINO
+ ModbusQuery[0].au16reg = ModbusSlaveRegisters+33; // pointer to a memory array in the CONTROLLINO
 
  // ModbusQuery 1: write a single register
  /*ModbusQuery[1].u8id = SlaveModbusAdd; // slave address
@@ -65,7 +65,7 @@ void setup() {
  
  ModbusSlaveRegisters[64] = 1; // initial value for the relays */
  
- ControllinoModbusMaster.begin( 9600 ); // baud-rate at 19200
+ ControllinoModbusMaster.begin( 19200 ); // baud-rate at 19200
  ControllinoModbusMaster.setTimeOut( 5000 ); // if there is no answer in 5000 ms, roll over
  
  WaitingTime = millis() + 1000;
