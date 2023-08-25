@@ -1,5 +1,5 @@
 #include <Controllino.h> /* Usage of CONTROLLINO library allows you to use CONTROLLINO_xx aliases in your sketch. */
-#include "ModbusRtu.h" /* Usage of ModBusRtu library allows you to implement the Modbus RTU protocol in your sketch. */
+#include "ModbusRtu.h"   /* Usage of ModBusRtu library allows you to implement the Modbus RTU protocol in your sketch. */
 
 // This MACRO defines Modbus master address.
 // For any Modbus slave devices are reserved addresses in the range from 1 to 247.
@@ -22,6 +22,8 @@
 #define Get_comm_event_counter 0x0B
 #define Report_slave_ID 0x11
 
+#define Motor_speed 150.0f
+
 
 // The object ControllinoModbuSlave of the class Modbus is initialized with three parameters.
 // The first parameter specifies the address of the Modbus slave device.
@@ -37,75 +39,91 @@ uint16_t ModbusSlaveRegisters[64];
 // This is a structure which contains a query to a slave device
 modbus_t ModbusQuery[2];
 
-uint8_t myState; // machine state
-uint8_t currentQuery; // pointer to message query
+uint8_t myState;       // machine state
+uint8_t currentQuery;  // pointer to message query
 
 unsigned long WaitingTime;
 
-void setup() {
- // initialize serial communication at 9600 bits per second:
- Serial.begin(9600);
- Serial.println("-----------------------------------------");
- Serial.println("CONTROLLINO Modbus RTU Master Test Sketch");
- Serial.println("-----------------------------------------");
- Serial.println("");
- // ModbusQuery 0: read registers (Read state of coil 65)
- ModbusQuery[0].u8id = SlaveModbusAdd; // slave address
- ModbusQuery[0].u8fct = Read_coils; // function code
- ModbusQuery[0].u16RegAdd = 0x29; // start address in slave
- ModbusQuery[0].u16CoilsNo = 1; // number of elements (coils or registers) to read
- ModbusQuery[0].au16reg = ModbusSlaveRegisters+33; // pointer to a memory array in the CONTROLLINO
+// Here we initialize the functions we're using.
+void setMotorSpeed(uint16_t ModbusSlaveRegisters[64], float speedPercentage) {
+  // Ensure the speed is no higuer than 200% or lower than -200%
+  if (speedPercentage < -200.0f) { speedPercentage = -200.0f; } 
+  else if (speedPercentage > 200.0f) { speedPercentage = 200.0f; }
 
- // ModbusQuery 1: write a single register
- /*ModbusQuery[1].u8id = SlaveModbusAdd; // slave address
- ModbusQuery[1].u8fct = Write_single_coil; // function code (this one is write a single register)
- ModbusQuery[1].u16RegAdd = 0x40; // start address in slave
- ModbusQuery[1].u16CoilsNo = 0; // number of elements (coils or registers) to write
- ModbusQuery[1].au16reg = ModbusSlaveRegisters+64; // pointer to a memory array in the CONTROLLINO
- 
- ModbusSlaveRegisters[64] = 1; // initial value for the relays */
- 
- ControllinoModbusMaster.begin( 19200 ); // baud-rate at 19200
- ControllinoModbusMaster.setTimeOut( 5000 ); // if there is no answer in 5000 ms, roll over
- 
- WaitingTime = millis() + 1000;
- myState = 0;
- currentQuery = 0; 
+  // Map speedPercentage to the range -1.0 to 1.0
+  float normalizedSpeed = speedPercentage / 100.0f;
+
+  // Convert normalized speed to 16-bit range (0x0000 to 0xFFFF)
+  uint16_t value = (uint16_t)((normalizedSpeed + 1.0f) * 0xFFFF / 2.0f);
+
+  // Store the binary representation in the array
+  for (int i = 0; i < 16; i++) {
+    int bit = (value >> (15 - i)) & 1;
+    ModbusSlaveRegisters[16 + i] = bit;
+  }
+}
+
+void setup() {
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+  Serial.println("-----------------------------------------");
+  Serial.println("CONTROLLINO Modbus RTU Master Test Sketch");
+  Serial.println("-----------------------------------------");
+  Serial.println("");
+  // ModbusQuery 0: read registers (Read state of coil 65)
+  ModbusQuery[0].u8id = SlaveModbusAdd;                // slave address
+  ModbusQuery[0].u8fct = Read_coils;                   // function code
+  ModbusQuery[0].u16RegAdd = 0x29;                     // start address in slave
+  ModbusQuery[0].u16CoilsNo = 1;                       // number of elements (coils or registers) to read
+  ModbusQuery[0].au16reg = ModbusSlaveRegisters + 33;  // pointer to a memory array in the CONTROLLINO
+
+  //ModbusQuery 1: Set motor speed
+  ModbusQuery[1].u8id = SlaveModbusAdd;                // slave address
+  ModbusQuery[1].u8fct = Write_multiple_coils;            // function code (this one is write a single register)
+  ModbusQuery[1].u16RegAdd = 0x10;                     // start address in slave
+  ModbusQuery[1].u16CoilsNo = 16;                       // number of elements (coils or registers) to write
+  ModbusQuery[1].au16reg = ModbusSlaveRegisters + 16;  // pointer to a memory array in the CONTROLLINO
+
+  setMotorSpeed(ModbusSlaveRegisters[64], Motor_speed);  // initial Speed value
+
+  ControllinoModbusMaster.begin(19200);      // baud-rate at 19200
+  ControllinoModbusMaster.setTimeOut(5000);  // if there is no answer in 5000 ms, roll over
+
+  WaitingTime = millis() + 1000;
+  myState = 0;
+  currentQuery = 0;
 }
 
 void loop() {
- switch( myState ) {
- case 0: 
- if (millis() > WaitingTime) myState++; // wait state
- break;
- case 1: 
- Serial.println(ModbusSlaveRegisters[33]);
- Serial.print("---- Sending query ");
- Serial.print("0");
- Serial.println(" -------------");
- ControllinoModbusMaster.query( ModbusQuery[0] ); // send query (only once)
- myState++;
- currentQuery++;
- if (currentQuery == 2) 
- {
- currentQuery = 0;
- }
- break;
- case 2:
- ControllinoModbusMaster.poll(); // check incoming messages
- if (ControllinoModbusMaster.getState() == COM_IDLE) 
- {
- // response from the slave was received
- myState = 0;
- WaitingTime = millis() + 1000; 
- // debug printout
- if (currentQuery == 0)
- {
- // registers write was proceed
- Serial.println("---------- WRITE RESPONSE RECEIVED ----");
- Serial.println("");
- }
- /*if (currentQuery == 1)
+  switch (myState) {
+    case 0:
+      if (millis() > WaitingTime) myState++;  // wait state
+      break;
+    case 1:
+      Serial.println(ModbusSlaveRegisters[33]);
+      Serial.print("---- Sending query ");
+      Serial.print("0");
+      Serial.println(" -------------");
+      ControllinoModbusMaster.query(ModbusQuery[0]);  // send query (only once)
+      myState++;
+      currentQuery++;
+      if (currentQuery == 2) {
+        currentQuery = 0;
+      }
+      break;
+    case 2:
+      ControllinoModbusMaster.poll();  // check incoming messages
+      if (ControllinoModbusMaster.getState() == COM_IDLE) {
+        // response from the slave was received
+        myState = 0;
+        WaitingTime = millis() + 1000;
+        // debug printout
+        if (currentQuery == 0) {
+          // registers write was proceed
+          Serial.println("---------- WRITE RESPONSE RECEIVED ----");
+          Serial.println("");
+        }
+        /*if (currentQuery == 1)
  {
  // registers read was proceed
  Serial.println("---------- READ RESPONSE RECEIVED ----");
@@ -140,6 +158,6 @@ void loop() {
  }
  break;
  }*/
-}
-}
+      }
+  }
 }
