@@ -1,8 +1,7 @@
 #include <ArduinoJson.h>
 #include <Ethernet.h>
 #include <Controllino.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
+#include "ModbusRtu.h"
 
 //Ethernet stuff
 byte RaspiIP[] = { 10, 65, 32, 140 };
@@ -28,11 +27,6 @@ JsonPart jsonParts[10];
 uint8_t JsonElements;
 
 
-//OneWire stuff
-#define OneWire_data_pin 11
-OneWire oneWire(OneWire_data_pin);
-DallasTemperature sensors(&oneWire);
-
 struct SensorConfig {
   String sensorID;
   int pin;;
@@ -52,6 +46,10 @@ enum ErrorCode {
   COMMAND_ERROR,
   // Add more as needed
 };
+
+void statusCheck() {
+
+}
 
 //Funtion to handle different error and sending them over to Raspberry PI
 //exepected input for this funtion is Error code from list "ErrorCode", General overview of the error,
@@ -126,7 +124,7 @@ void commandComparison(JsonPart jsonParts[]) {
   } else {
     switch (command) {
       case statusCheck:
-        statusCheak();
+        statusCheck();
         break;
       case getTemps:
         getTemperature();
@@ -140,9 +138,7 @@ void commandComparison(JsonPart jsonParts[]) {
 }
 
 
-void statusCheak() {
 
-}
 
 
 void sendJson(String serializedMessage) {
@@ -241,7 +237,7 @@ void readPhValues() {
 
 void setup() {
   Ethernet.begin(MAC, OwnIP);
-  sensors.begin();
+
 
   pinMode(OneWire_data_pin, INPUT);
 
