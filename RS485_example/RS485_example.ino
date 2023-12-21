@@ -6,7 +6,7 @@
 // Important note only address 0 is reserved for a Modbus master device!
 
 #define MasterModbusAdd 0
-#define SlaveModbusAdd 1
+#define SlaveModbusAdd 4
 
 // This MACRO defines number of the comport that is used for RS 485 interface.
 // For MAXI and MEGA RS485 is reserved UART Serial3.
@@ -197,7 +197,7 @@ void setup() {
   Serial.println("");
 
   //Initialize the default values for the array
-  ModbusSlaveRegisters[SPEED_SETPOINT] = 0x0FFF;  // initial Speed value
+  ModbusSlaveRegisters[SPEED_SETPOINT] = 0x1FE0;  // initial Speed value
 
 
   // ModbusQuery 0: read registers (Read state of coil 34)

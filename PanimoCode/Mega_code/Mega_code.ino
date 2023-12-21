@@ -6,7 +6,7 @@
 // Important note only address 0 is reserved for a Modbus master device!
 
 #define MasterModbusAdd 0
-#define SlaveModbusAdd 1
+//#define SlaveModbusAdd 1
 
 // This MACRO defines number of the comport that is used for RS 485 interface.
 // For MAXI and MEGA RS485 is reserved UART Serial3.
@@ -82,7 +82,8 @@ uint16_t ModbusSlaveRegisters[64] = { 0 };
 
 
 // We preset some default values
-// ModbusSlaveRegisters[SPEED_SETPOINT] = 0xFFFF;
+//ModbusSlaveRegisters[SPEED_SETPOINT] = 0xFFFF;
+
 // Serial.print("SPEED_SETPOINT set to: ");
 // Serial.println(ModbusSlaveRegisters[ModbusQuery[2].u16RegAdd]);
 
@@ -91,6 +92,9 @@ modbus_t ModbusQuery[10];
 
 bool motorState = 0;  // machine state
 bool coastingState = 0;
+bool waitForResponse = false;
+
+char serialDump;
 
 unsigned long WaitingTime;
 
@@ -134,7 +138,7 @@ void configureModbusQuery(int queryNumber, int slaveAddress, int functionCode, i
 
 void sendQuery(int queryNumber, unsigned long RESPONSE_TIMEOUT_MS) {
 
-  if (queryNumber == 4) {
+  /*if (queryNumber == 4) {
     if (motorState == 0) {
       ModbusSlaveRegisters[SET_MOTOR_STATE] = 1;
       motorState = 1;
@@ -144,7 +148,7 @@ void sendQuery(int queryNumber, unsigned long RESPONSE_TIMEOUT_MS) {
     }
   }
 
-  if (queryNumber == 5) {
+  /*if (queryNumber == 5) {
     if (coastingState == 0) {
       ModbusSlaveRegisters[COASTING] = 1;
       coastingState = 1;
@@ -153,9 +157,11 @@ void sendQuery(int queryNumber, unsigned long RESPONSE_TIMEOUT_MS) {
       coastingState = 0;
     }
   }
+  */
+  
 
-  Serial.print("Before sending query, register shows: ");
-  Serial.println(ModbusSlaveRegisters[SPEED_SETPOINT]);
+  //Serial.print("Before sending query, register shows: ");
+  //Serial.println(ModbusSlaveRegisters[SPEED_SETPOINT]);
 
   Serial.println("Sending query.");
   // Send the Modbus query
@@ -169,8 +175,8 @@ void sendQuery(int queryNumber, unsigned long RESPONSE_TIMEOUT_MS) {
       // Response received, process data
       Serial.println("Response received");
 
-      Serial.print("After sending query, register shows: ");
-      Serial.println(ModbusSlaveRegisters[SPEED_SETPOINT]);
+      //Serial.print("After sending query, register shows: ");
+      //Serial.println(ModbusSlaveRegisters[SPEED_SETPOINT]);
 
       // if(queryNumber==3){
 
@@ -208,11 +214,13 @@ void setup() {
   Serial.println("");
 
   //Initialize the default values for the array
-  ModbusSlaveRegisters[SPEED_SETPOINT] = 0x0FFF;  // initial Speed value
-
+  //ModbusSlaveRegisters[SPEED_SETPOINT] = 0x0FFF;  // initial Speed value
+  ModbusSlaveRegisters[COASTING] = 1;
+  ModbusSlaveRegisters[SET_MOTOR_STATE] = 0;
+/*
   configureModbusQuery(0, SlaveModbusAdd, Read_coils, FC_READY, 1, FC_READY);
   configureModbusQuery(1, SlaveModbusAdd, Read_coils, CONTROL_READY, 1, CONTROL_READY);
-  configureModbusQuery(2, SlaveModbusAdd, Write_single_register, 0xc359, 1, SPEED_SETPOINT);
+  configureModbusQuery(2, SlaveModbusAdd, Write_single_register, 0xc359, 1, SPEED_SETPOINT); // set speed reference
   configureModbusQuery(3, SlaveModbusAdd, Read_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
   configureModbusQuery(4, SlaveModbusAdd, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
   configureModbusQuery(5, SlaveModbusAdd, Write_single_coil, COASTING, 1, COASTING);
@@ -262,7 +270,7 @@ void setup() {
   ModbusQuery[5].au16reg = &ModbusSlaveRegisters[COASTING];  // pointer to a memory array in the CONTROLLINO
 */
 
-
+  
 
 
 
@@ -271,12 +279,111 @@ void setup() {
   Modbus.setTimeOut(5000);  // if there is no answer in 5000 ms, roll over
 
   WaitingTime = 2000;
+  for(int slave = 4; slave < 6; slave++){
+    configureModbusQuery(5, slave, Write_single_coil, COASTING, 1, COASTING);
+    configureModbusQuery(4, slave, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
+    sendQuery(4, WaitingTime);
+    sendQuery(5, WaitingTime);
+  }
+
+
 }
 
 void loop() {
+  
+
+
+
+  Serial.println("Input a number between 1-4 to choose action");
+  Serial.println("1 - Set speed value");
+  Serial.println("2 - Motor start/stop");
+  Serial.println("3 - Heating duty cycle setup (Not in place yet)");
+  Serial.println("4 - Heating start/stop (Not in place yet)");
+  Serial.println("5 - Select direction");
   delay(1000);
-  if (Serial.available()) {
-    int query = Serial.parseInt();
-    sendQuery(query, WaitingTime);
-  }
+
+  Serial.println(Serial.available());
+
+  while(Serial.available() == 0){}
+
+  int mode = Serial.parseInt();
+  serialDump = Serial.read();
+  //Serial.flush();
+  Serial.print("You selected ");
+  Serial.println(mode);
+
+
+  Serial.println("Select slave_id of FC you wish to control.");
+  delay(1000);
+  Serial.println(Serial.available());
+  while(Serial.available() == 0){}
+
+  int slave_id = Serial.parseInt();
+  serialDump = Serial.read();
+  Serial.print("You selected ");
+  Serial.println(slave_id);
+
+
+  switch (mode){
+
+    case 1:{
+      
+      Serial.println("Please give a speed value from 0 to 100%"); 
+      delay(50);
+      while (Serial.available() == 0){}
+      int speed = Serial.parseInt();
+      serialDump = Serial.read();
+      ModbusSlaveRegisters[SPEED_SETPOINT] = speed;
+
+      configureModbusQuery(2, slave_id, Write_single_register, 0xc359, 1, SPEED_SETPOINT);
+      //configureModbusQuery(3, slave_id, Write_multiple_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
+      sendQuery(2, WaitingTime);
+
+      Serial.print("Speed value saved as ");
+      Serial.print(ModbusSlaveRegisters[SPEED_SETPOINT]);
+      Serial.print(", Hex: 0x");
+      Serial.println(ModbusSlaveRegisters[SPEED_SETPOINT], HEX);
+      //sendQuery(query, WaitingTime);
+      break;
+    }
+
+
+
+    case 2:{
+      Serial.println("select start or stop (0 or 1)");
+      while(Serial.available() == 0){}
+      int state = Serial.parseInt();
+      serialDump = Serial.read();
+
+      ModbusSlaveRegisters[SET_MOTOR_STATE] = state;
+      
+      configureModbusQuery(4, slave_id, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
+      sendQuery(4, WaitingTime);
+      break;
+    }
+
+    case 3:{
+      break;
+    }
+
+    case 4:{
+      break;
+    }
+
+    case 5:{
+      Serial.println("Select direction (0 or 1)");
+      while(Serial.available() == 0){}
+      int direction = Serial.parseInt();
+      serialDump = Serial.read();
+      ModbusSlaveRegisters[REVERSING] = direction;
+
+      configureModbusQuery(6, slave_id, Write_single_coil, REVERSING, 1, REVERSING);
+      break;
+    }
+      
+    }
+  
+  
+
+
 }
