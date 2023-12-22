@@ -1,0 +1,13 @@
+Raspi builds JSON -> Sends JSON throgh Ethernet client to Controllino -> Controllino receives and Deserializes JSON -> Saves data to variables
+
+
+
+
+
+What data do I need from the JSON object?
+
+- heating elements On time and Off time
+- Query number
+- Motor_speed
+- slave_id
+

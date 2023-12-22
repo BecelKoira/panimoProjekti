@@ -1,4 +1,6 @@
 #include <Controllino.h> /* Usage of CONTROLLINO library allows you to use CONTROLLINO_xx aliases in your sketch. */
+#include <Ethernet.h>
+#include <ArduinoJson.h>
 #include "ModbusRtu.h"   /* Usage of ModBusRtu library allows you to implement the Modbus RTU protocol in your sketch. */
 
 // This MACRO defines Modbus master address.
@@ -22,9 +24,33 @@
 #define Get_comm_event_counter 0x0B
 #define Report_slave_ID 0x11
 
-#define Motor_speed 50.0f
 
-// Degine named constants for register addresses
+
+byte RaspiIP[] = { 10, 65, 32, 140 };
+byte ControllinoMaxiIP[] = { 10, 65, 32, 141 };
+byte ControllinoMegaIP[] = { 10, 65, 32, 142 };
+byte MAC[] = { 0x50, 0xD7, 0x53, 0x00, 0xC8, 0xB4 };
+#define TCP_port = 3360
+EthernetClient client;
+#define OwnIP ControllinoMegaIP
+
+int configureQueryNumber = 0;
+
+
+int motor_speed[5];
+int slave_id;
+
+int query_number;
+
+
+
+
+
+
+
+
+
+// Define named constants for register addresses
 enum ModbusRegisterAddresses {
   //FC control words.
   PRESET_REFERENCE_LSB = 0x00,  // Coil 1
@@ -78,6 +104,7 @@ Modbus Modbus(MasterModbusAdd, RS485Serial, 0);
 // check the frequency driver datasheet for a reference on the registers. We have 65 available registers to work with.
 // All addresses are referenced to zero, so whichever register you want it's equivalent value would be address -1 in HEX format. ie. register 1 is addressed as 0x00 and register 65 is addressed as 0x40 (64 in HEX)
 uint16_t ModbusSlaveRegisters[64] = { 0 };
+uint16_t Motor_speed[5] = { 0 };
 
 
 
@@ -88,7 +115,7 @@ uint16_t ModbusSlaveRegisters[64] = { 0 };
 // Serial.println(ModbusSlaveRegisters[ModbusQuery[2].u16RegAdd]);
 
 // This is a structure which contains a query to a slave device
-modbus_t ModbusQuery[10];
+modbus_t ModbusQuery[64];
 
 bool motorState = 0;  // machine state
 bool coastingState = 0;
@@ -126,13 +153,14 @@ uint16_t setMotorSpeed(float speedPercentage) {
   // }
 }
 
-void configureModbusQuery(int queryNumber, int slaveAddress, int functionCode, int startAddress, int coilNumber, int arrayPointer){
+void configureModbusQuery(int slaveAddress, int functionCode, int startAddress, int coilNumber, int arrayPointer){
 
-  ModbusQuery[queryNumber].u8id = slaveAddress;                      // slave address
-  ModbusQuery[queryNumber].u8fct = functionCode;                         // function code
-  ModbusQuery[queryNumber].u16RegAdd = startAddress;                       // start address in slave
-  ModbusQuery[queryNumber].u16CoilsNo = coilNumber;                             // number of elements (coils or registers) to read
-  ModbusQuery[queryNumber].au16reg = &ModbusSlaveRegisters[arrayPointer];  // pointer to a memory array in the CONTROLLINO
+  ModbusQuery[configureQueryNumber].u8id = slaveAddress;                      // slave address
+  ModbusQuery[configureQueryNumber].u8fct = functionCode;                         // function code
+  ModbusQuery[configureQueryNumber].u16RegAdd = startAddress;                       // start address in slave
+  ModbusQuery[configureQueryNumber].u16CoilsNo = coilNumber;                             // number of elements (coils or registers) to read
+  ModbusQuery[configureQueryNumber].au16reg = &ModbusSlaveRegisters[arrayPointer];  // pointer to a memory array in the CONTROLLINO
+  configureQueryNumber++;
 
 }
 
@@ -202,7 +230,10 @@ void sendQuery(int queryNumber, unsigned long RESPONSE_TIMEOUT_MS) {
   }
 }
 
+void readIncomingJSON(const String& jsonString) {
 
+
+}
 
 
 void setup() {
@@ -217,13 +248,18 @@ void setup() {
   //ModbusSlaveRegisters[SPEED_SETPOINT] = 0x0FFF;  // initial Speed value
   ModbusSlaveRegisters[COASTING] = 1;
   ModbusSlaveRegisters[SET_MOTOR_STATE] = 0;
-/*
-  configureModbusQuery(0, SlaveModbusAdd, Read_coils, FC_READY, 1, FC_READY);
-  configureModbusQuery(1, SlaveModbusAdd, Read_coils, CONTROL_READY, 1, CONTROL_READY);
-  configureModbusQuery(2, SlaveModbusAdd, Write_single_register, 0xc359, 1, SPEED_SETPOINT); // set speed reference
-  configureModbusQuery(3, SlaveModbusAdd, Read_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
-  configureModbusQuery(4, SlaveModbusAdd, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
-  configureModbusQuery(5, SlaveModbusAdd, Write_single_coil, COASTING, 1, COASTING);
+
+
+
+
+//Configuration for FC1
+  configureModbusQuery(1, Read_coils, FC_READY, 1, FC_READY);
+  configureModbusQuery(1, Read_coils, CONTROL_READY, 1, CONTROL_READY);
+  configureModbusQuery(1, Write_single_register, 0xc359, 1, SPEED_SETPOINT); // set speed reference
+  configureModbusQuery(1, Read_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
+  configureModbusQuery(1, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
+  configureModbusQuery(1, Write_single_coil, COASTING, 1, COASTING);
+
 /*
   // ModbusQuery 0: read registers (Read state of coil 34)
   ModbusQuery[0].u8id = SlaveModbusAdd;                      // slave address
@@ -280,8 +316,8 @@ void setup() {
 
   WaitingTime = 2000;
   for(int slave = 4; slave < 6; slave++){
-    configureModbusQuery(5, slave, Write_single_coil, COASTING, 1, COASTING);
-    configureModbusQuery(4, slave, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
+    configureModbusQuery(5, slave, Write_single_coil, COASTING, 1);
+    configureModbusQuery(4, slave, Write_single_coil, SET_MOTOR_STATE, 1);
     sendQuery(4, WaitingTime);
     sendQuery(5, WaitingTime);
   }
@@ -289,12 +325,10 @@ void setup() {
 
 }
 
-void loop() {
-  
 
 
-
-  Serial.println("Input a number between 1-4 to choose action");
+void serialTest(){
+   Serial.println("Input a number between 1-4 to choose action");
   Serial.println("1 - Set speed value");
   Serial.println("2 - Motor start/stop");
   Serial.println("3 - Heating duty cycle setup (Not in place yet)");
@@ -335,7 +369,7 @@ void loop() {
       serialDump = Serial.read();
       ModbusSlaveRegisters[SPEED_SETPOINT] = speed;
 
-      configureModbusQuery(2, slave_id, Write_single_register, 0xc359, 1, SPEED_SETPOINT);
+      configureModbusQuery(2, slave_id, Write_single_register, 0xc359, 1);
       //configureModbusQuery(3, slave_id, Write_multiple_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
       sendQuery(2, WaitingTime);
 
@@ -357,7 +391,7 @@ void loop() {
 
       ModbusSlaveRegisters[SET_MOTOR_STATE] = state;
       
-      configureModbusQuery(4, slave_id, Write_single_coil, SET_MOTOR_STATE, 1, SET_MOTOR_STATE);
+      configureModbusQuery(4, slave_id, Write_single_coil, SET_MOTOR_STATE, 1);
       sendQuery(4, WaitingTime);
       break;
     }
@@ -377,11 +411,22 @@ void loop() {
       serialDump = Serial.read();
       ModbusSlaveRegisters[REVERSING] = direction;
 
-      configureModbusQuery(6, slave_id, Write_single_coil, REVERSING, 1, REVERSING);
+      configureModbusQuery(6, slave_id, Write_single_coil, REVERSING, 1);
       break;
     }
       
     }
+
+
+
+}
+
+void loop() {
+  
+
+  serialTest();
+
+ 
   
   
 
