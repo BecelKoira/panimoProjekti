@@ -24,14 +24,25 @@
 #define Get_comm_event_counter 0x0B
 #define Report_slave_ID 0x11
 
+// Pin configuration for heatingElements
+const int heatingElementPins[] = {2, 3, 4, 5, 6, 7};
+bool heatingElementStates[] = {false, false, false, false, false, false};
+int dutyCycles[] = {0, 0, 0, 0, 0, 0};
+const int numElements = sizeof(heatingElementPins) / sizeof(heatingElementPins[0]);
 
+// On and off times fir each heating element (in milliseconds)
+unsigned long onTimes[] = {0, 0, 0, 0};
+unsigned long offTimes[] = {5000, 5000, 5000, 5000};
 
 byte RaspiIP[] = { 10, 65, 32, 140 };
 //byte ControllinoMaxiIP[] = { 10, 65, 32, 141 };
 byte ControllinoMegaIP[] = { 10, 65, 32, 142 };
 byte MAC[] = { 0x50, 0xD7, 0x53, 0x00, 0xC8, 0xB4 };
 #define TCP_port  3360
+
 EthernetServer server(TCP_port);
+EthernetClient client;
+
 #define OwnIP ControllinoMegaIP
 String jsonString;
 
@@ -39,12 +50,10 @@ int motor_speed[5];
 int slave_id;
 int query_number;
 
-
 DynamicJsonDocument doc(1024);
 
+
 //JSON variables
-int onTime;
-int offTime;
 int queryNumber;
 uint16_t motorSpeed;
 int slaveId;
@@ -52,8 +61,6 @@ int motorState;
 
 bool coastingState = 0;
 bool waitForResponse = false;
-
-char serialDump;
 
 unsigned long WaitingTime;
 
@@ -288,6 +295,10 @@ String readIncomingJSON(EthernetClient& client){
 
 // This function parses the JSON string into a JSON object
 void parseJsonString(const String& jsonString, DynamicJsonDocument& doc){
+  queryNumber = NULL;
+  
+
+
   //Parse the JSOn string into the JSON document
   DeserializationError error = deserializeJson(doc, jsonString);
 
@@ -298,14 +309,37 @@ void parseJsonString(const String& jsonString, DynamicJsonDocument& doc){
   }
 
   // Retrieve the values from the JSON Object
-  JsonObject heatingElements = doc["heatingElements"];
-  onTime = heatingElements["onTime"];
-  offTime = heatingElements["offTime"];
+  JsonArray heatingElements = doc["heatingElements"].as<JsonArray>();
 
-  queryNumber = doc["queryNumber"];
-  motorSpeed = doc["motorSpeed"];
-  motorState = doc["motorState"];
-  slaveId = doc["slaveId"];
+  
+
+  // Loop through each heating element in the array
+  for (int i = 0; i < heatingElements.size(); i++) {
+    JsonObject heatingElement = heatingElements[i].as<JsonObject>();
+
+    // Construct the key for isEnabled and dutyCycle
+    String isEnabledKey = "heatingElement" + String(i + 1) + "_isEnabled";
+    String dutyCycleKey = "heatingElement" + String(i + 1) + "_dutyCycle";
+
+    // Extract isEnabled and dutyCycle and store in arrays
+    if (heatingElement.containsKey(isEnabledKey) && heatingElement.containsKey(dutyCycleKey)) {
+      heatingElementStates[i] = heatingElement[isEnabledKey];
+      dutyCycles[i] = heatingElement[dutyCycleKey];
+    } else {
+      Serial.print("Value for heating element ");
+      Serial.print(i + 1);
+      Serial.println(" missing.");
+      }
+    }
+
+  if (doc.containsKey("queryNumber")){queryNumber = doc["queryNumber"];}
+  
+  if (doc.containsKey("motorSpeed")){motorSpeed = doc["motorSpeed"];}
+  
+  if (doc.containsKey("motorState")){motorState = doc["motorState"];}
+  
+  if (doc.containsKey("slaveId")){slaveId = doc["slaveId"];}
+  
 
 }
 
@@ -333,9 +367,66 @@ void createExampleJSON(){
 
 } 
 
+// Function to control heating elements based on duty cycle
+void controlHeatingElement(int pin, int dutyCycle){
+
+  static unsigned long previousMillis = 0;
+  unsigned long currentMillis = millis();
+  static bool heatingElementState = LOW;
+
+  // Calculate the time for which the heating element should be ON based on dutyCycle
+  unsigned long onTime = (5 * dutyCycle) / 100;
+  unsigned long offTime = 5 - onTime;
+
+  
+
+  // Check if it's time to toggle the heating element
+  if (currentMillis - previousMillis >= (heatingElementState ? onTime : offTime) * 1000) {
+    // Toggle the heating element state
+    heatingElementState = !heatingElementState;
+
+    previousMillis = currentMillis;
+
+    digitalWrite(pin, heatingElementState);
+
+    // Print the current state to Serial
+    Serial.print("Heating Element on Pin ");
+    Serial.print(pin);
+    Serial.print(" State: ");
+    Serial.println(heatingElementState ? "ON" : "OFF");
+
+    
+  }
+
+
+}
+
+
+
+void reconnectClient(){
+  static unsigned long lastConnectionTime = 0;
+  static const unsigned long connectionInterval = 5000;
+
+  if(!client.connected()) {
+    unsigned long currentTime = millis();
+    if (currentTime - lastConnectionTime >= connectionInterval){
+      Serial.println("Attempting to reconnect...");
+      client.stop();
+      client.connect(ControllinoMegaIP, TCP_port);
+    }
+  }
+}
+
 
 
 void setup() {
+
+  //Initialize heating element pins
+  for (int i = 0; i < numElements; i++) {
+    pinMode(heatingElementPins[i], OUTPUT);
+  }
+
+
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
   Ethernet.begin(MAC, ControllinoMegaIP);
@@ -371,6 +462,8 @@ void setup() {
 
 
 
+
+
 void serialTest(){
    Serial.println("Input a number between 1-4 to choose action");
   Serial.println("1 - Set speed value");
@@ -385,7 +478,7 @@ void serialTest(){
   while(Serial.available() == 0){}
 
   int mode = Serial.parseInt();
-  serialDump = Serial.read();
+  //serialDump = Serial.read();
   //Serial.flush();
   Serial.print("You selected ");
   Serial.println(mode);
@@ -397,7 +490,7 @@ void serialTest(){
   while(Serial.available() == 0){}
 
   int slave_id = Serial.parseInt();
-  serialDump = Serial.read();
+  //serialDump = Serial.read();
   Serial.print("You selected ");
   Serial.println(slave_id);
 
@@ -410,7 +503,7 @@ void serialTest(){
       delay(50);
       while (Serial.available() == 0){}
       int speed = Serial.parseInt();
-      serialDump = Serial.read();
+      //serialDump = Serial.read();
       ModbusSlaveRegisters[SPEED_SETPOINT] = speed;
       //configureModbusQuery(3, slave_id, Write_multiple_coils, SPEED_SETPOINT, 16, SPEED_SETPOINT);
       sendQuery(2, WaitingTime);
@@ -429,7 +522,7 @@ void serialTest(){
       Serial.println("select start or stop (0 or 1)");
       while(Serial.available() == 0){}
       int state = Serial.parseInt();
-      serialDump = Serial.read();
+      //serialDump = Serial.read();
 
       ModbusSlaveRegisters[SET_MOTOR_STATE] = state;
       
@@ -450,7 +543,7 @@ void serialTest(){
       Serial.println("Select direction (0 or 1)");
       while(Serial.available() == 0){}
       int direction = Serial.parseInt();
-      serialDump = Serial.read();
+      //serialDump = Serial.read();
       ModbusSlaveRegisters[REVERSING] = direction;
 
       //configureModbusQuery(6, slave_id, Write_single_coil, REVERSING, 1);
@@ -465,7 +558,7 @@ void serialTest(){
 
 void loop() {
   // Check if there's a new client connected
-  EthernetClient client = server.available();
+  client = server.available();
   if (client) {
     Serial.println("New client connected.");
 
@@ -475,6 +568,7 @@ void loop() {
     parseJsonString(jsonString, doc); 
     Serial.println(motorState);
     Serial.println(motorSpeed);
+
     if (motorState){
       ModbusSlaveRegisters[SET_MOTOR_STATE] = 1;
     }
@@ -485,10 +579,27 @@ void loop() {
     
     ModbusSlaveRegisters[SPEED_SETPOINT] = motorSpeed;
 
-    configureModbusQuery(slaveId, queryNumber);
-    sendQuery(queryNumber, WaitingTime);
+    if(queryNumber != NULL){
+      configureModbusQuery(slaveId, queryNumber);
+      sendQuery(queryNumber, WaitingTime);
+    }
+
+
+    
+    reconnectClient();
+
+    
 
   }
+
+  // Control each heating element individually
+  for (int i = 0; i < numElements; i++) {
+    if (heatingElementStates[i]){controlHeatingElement(heatingElementPins[i], dutyCycles[i]);}
+    
+    }
+
+
+
   
   /*else{
     client.stop();
@@ -500,8 +611,9 @@ void loop() {
 
 
 
+
+
 }
 
-  //serialTest();
 
 
